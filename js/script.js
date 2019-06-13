@@ -1,5 +1,6 @@
 ﻿/* todo:
 - jména měst?
+- pozicování legendy
 */
 
 let host = "https://data.irozhlas.cz";
@@ -47,7 +48,9 @@ function getCanc(jmeno, obec) {
 }
 
 function vlozObce(data) {
-  data.features.forEach((val, idx) => data.features[idx].properties.rodstr = odzavorkuj(val.properties.rod));
+  data.features.forEach((val, idx) => {
+    data.features[idx].properties.rodstr = odzavorkuj(val.properties.rod);
+  });
 
   map.addLayer({
     id: "obce",
