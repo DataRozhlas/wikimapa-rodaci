@@ -15,12 +15,17 @@
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+
+#canc {
+  font-size: 12px;
+}
+
 @media only screen and (min-width: 600px) {
   #legend {
     width: 20vw;
     position: absolute;
-    background-color: white;
-    border-color:  #6c757d;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-color: lightgray;
     border-style: solid;
     border-width: 0.5px;
     border-radius: 3px;
@@ -30,13 +35,11 @@
     margin-bottom: 3px;
     padding: 3px;
     min-height: 30px;
-    border-color:  #6c757d;
-    border-style: solid;
-    border-width: 0.5px;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   }
 }
 
+/*
 #inp-geocode {
     width: 20%;
     min-width: 140px;
@@ -70,7 +73,4 @@
     background-color: #5a6268;
     border-color: #545b62;
   }
-
-  #canc {
-    font-size: 12px;
-  }
+*/

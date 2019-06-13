@@ -1,6 +1,4 @@
 ﻿/* todo:
-- závorky u jmen - na mapě a v titulku popisku
-- menší kolečka?
 - jména měst?
 */
 
@@ -44,11 +42,13 @@ function getCanc(jmeno, obec) {
       document.getElementById("canc").innerHTML = `${odzavorkuj(text)} [<a target="_blank" rel="noopener noreferrer" href="https://cs.wikipedia.org/wiki/${jmeno}">více</a>]`;
     }
   });
-  r.open("GET", "https://cs.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&origin=*&exsentences=5&exintro=true&explaintext=true&titles=" + encodeURI(jmeno));
+  r.open("GET", "https://cs.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&origin=*&exsentences=3&exintro=true&explaintext=true&titles=" + encodeURI(jmeno));
   r.send();
 }
 
 function vlozObce(data) {
+  data.features.forEach((val, idx) => data.features[idx].properties.rodstr = odzavorkuj(val.properties.rod));
+
   map.addLayer({
     id: "obce",
     type: "symbol",
@@ -68,7 +68,7 @@ function vlozObce(data) {
       "icon-allow-overlap": true,
       "icon-ignore-placement": true,
       "icon-optional": true,
-      "text-field": "{rod}",
+      "text-field": "{rodstr}",
       "symbol-sort-key": ["-", 1, ["get", "pv"]],
       "text-size": [
         "interpolate",
@@ -94,7 +94,7 @@ function vlozObce(data) {
 }
 
 map.on("load", () => {
-  map.loadImage(host + "/wikimapa-rodaci/data/kol.png", function (error, image) {
+  map.loadImage(host + "/wikimapa-rodaci/data/kol.png", (error, image) => {
     if (error) throw error;
     map.addImage("ico", image, {
       sdf: "true",
@@ -129,6 +129,7 @@ map.on("load", () => {
   });
 });
 
+/*
 $("#inp-geocode").on("focus input", () => $("#inp-geocode").css("border-color", "black"));
 
 // geocoder
@@ -160,3 +161,4 @@ form.onsubmit = function submitForm(event) {
     }, "xml");
   }
 };
+*/

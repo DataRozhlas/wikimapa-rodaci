@@ -1,17 +1,17 @@
 title: "Smetanova Litomyšl, Mariánské Lázně Jaromíra Soukupa. Mapa Česka ukazuje nejhledanější rodáky"
 perex: "Nejslavnějším pražským rodákem je Karel IV., brněnským zase Bohumil Hrabal. Tedy aspoň měřeno počtem zobrazení článků o osobnostech na české Wikipedii. Nejhledanější rodáky českých měst a vesnic zobrazuje interaktivní mapa, kterou připravili datoví novináři serveru iROZHLAS.cz."
 styles: ['https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css']
-libraries: ['https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js', jquery]
+libraries: ['https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js']
 options: [noheader, nopic] #wide, noheader (, nopic)
 ---
 
 <wide>
-<form action="?" id='frm-geocode'>
+<!--<form action="?" id="frm-geocode">
 	<div class="inputs">
 	<input type="text" id="inp-geocode" placeholder="Zadejte obec či adresu...">
 	<input type="submit" id="inp-btn" value="Najít">
 	</div>
-</form>
+</form>-->
 <div id="map"></div>
 <div id="legend">
 	<div id="legend_top"><b>Vyberte osobnost.</b></div>
