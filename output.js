@@ -1,1 +1,100 @@
-!function(e){var t={};function o(n){if(t[n])return t[n].exports;var r=t[n]={i:n,l:!1,exports:{}};return e[n].call(r.exports,r,r.exports,o),r.l=!0,r.exports}o.m=e,o.c=t,o.d=function(e,t,n){o.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},o.t=function(e,t){if(1&t&&(e=o(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(o.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)o.d(n,r,function(t){return e[t]}.bind(null,r));return n},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(t,"a",t),t},o.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},o.p="",o(o.s=0)}([function(e,t){var o="https://data.irozhlas.cz";"localhost"==window.location.hostname&&(o="http://localhost");var n=new mapboxgl.Map({container:"map",style:o+"/wikimapa-rodaci/data/style.json",zoom:6.85,maxZoom:11,attributionControl:!1,center:[15.3350758,49.7417517]});n.getCanvas().style.cursor="default",n.fitBounds([[12.09,51.06],[18.87,48.55]]),n.addControl(new mapboxgl.NavigationControl),n.addControl(new mapboxgl.AttributionControl({compact:!0,customAttribution:'obrazový podkres <a target="_blank" href="https://samizdat.cz">Samizdat</a>, data <a target="_blank" href="https://vdp.cuzk.cz/">ČÚZK</a> a <a target="_blank" href="https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana">Wikipedia</a>'})),n.scrollZoom.disable(),n.on("click",function(e){n.scrollZoom.enable()}),n.on("load",function(){var e=new XMLHttpRequest;e.addEventListener("load",function(e){return t=JSON.parse(e.target.response),void n.addLayer({id:"obce",type:"symbol",source:{type:"geojson",data:t},layout:{"icon-image":"circle-11","icon-size":.5,"icon-ignore-placement":!0,"icon-optional":!0,"text-field":"{rod}","symbol-sort-key":["-",1,["get","pv"]],"text-size":["interpolate",["linear"],["get","pv"],80,10,2117350,30],"text-font":["Open Sans Regular"],"text-offset":[0,.3],"text-anchor":"top"},paint:{"icon-color":"#3182bd","icon-opacity":.5,"text-color":"#3182bd","text-opacity":.9,"text-halo-color":"white","text-halo-width":2,"text-halo-blur":1}});var t}),e.open("GET",o+"/wikimapa-rodaci/data/data.json"),e.send(),n.on("mousemove",function(e){n.queryRenderedFeatures(e.point,{layers:["obce"]}).length>0?n.getCanvas().style.cursor="pointer":n.getCanvas().style.cursor="grab"}),n.on("click",function(e){var t,o,r=n.queryRenderedFeatures(e.point,{layers:["obce"]});r.length>0?(document.getElementById("legend_top").innerHTML="<b>"+r[0].properties.rod+"</b> ("+r[0].properties.Nazev+")",t=r[0].properties.rod,(o=new XMLHttpRequest).addEventListener("load",function(e){var o=JSON.parse(e.target.response);"query"in o&&(document.getElementById("canc").innerHTML=Object.values(o.query.pages)[0].extract.slice(0,200)+'... [<a rel="noopener noreferrer" target="_blank" href="https://cs.wikipedia.org/wiki/'+t+'">více</a>]')}),o.open("GET","https://cs.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&origin=*&exintro=true&explaintext=true&titles="+encodeURI(t)),o.send()):(document.getElementById("legend_top").innerHTML="<b>Vyberte osobnost.</b>",document.getElementById("canc").innerHTML="")})}),$("#inp-geocode").on("focus input",function(){return $("#inp-geocode").css("border-color","black")}),document.getElementById("frm-geocode").onsubmit=function(e){e.preventDefault();var t=document.getElementById("inp-geocode").value;""===t?n.flyTo({center:[15.3350758,49.7417517],zoom:7}):$.get("https://api.mapy.cz/geocode?query=".concat(t),function(e){if(void 0!==$(e).find("item").attr("x")){var t=parseFloat($(e).find("item").attr("x")),o=parseFloat($(e).find("item").attr("y"));t<12||t>19||o<48||o>52?$("#inp-geocode").css("border-color","red"):n.flyTo({center:[t,o],zoom:14})}else $("#inp-geocode").css("border-color","red")},"xml")}}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./js/script.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./js/script.js":
+/*!**********************!*\
+  !*** ./js/script.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("var host = 'https://data.irozhlas.cz';\n\nif (window.location.hostname == 'localhost') {\n  host = 'http://localhost';\n}\n\nvar map = new mapboxgl.Map({\n  container: \"map\",\n  style: host + '/wikimapa-rodaci/data/style.json',\n  zoom: 6.85,\n  maxZoom: 11,\n  attributionControl: false,\n  center: [15.3350758, 49.7417517]\n});\nmap.getCanvas().style.cursor = 'default';\nmap.fitBounds([[12.09, 51.06], [18.87, 48.55]]);\nmap.addControl(new mapboxgl.NavigationControl());\nmap.addControl(new mapboxgl.AttributionControl({\n  compact: true,\n  customAttribution: 'obrazový podkres <a target=\"_blank\" href=\"https://samizdat.cz\">Samizdat</a>, data <a target=\"_blank\" href=\"https://vdp.cuzk.cz/\">ČÚZK</a> a <a target=\"_blank\" href=\"https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana\">Wikipedia</a>'\n}));\nmap.scrollZoom.disable(); // zoom myší teprve až po interakci s mapou\n\nmap.on(\"click\", function (e) {\n  map.scrollZoom.enable();\n});\n\nfunction getCanc(jmeno) {\n  var r = new XMLHttpRequest();\n  r.addEventListener('load', function (e) {\n    var prs = JSON.parse(e.target.response);\n\n    if ('query' in prs) {\n      document.getElementById('canc').innerHTML = Object.values(prs.query.pages)[0].extract.slice(0, 200) + '... [<a rel=\"noopener noreferrer\" target=\"_blank\" href=\"https://cs.wikipedia.org/wiki/' + jmeno + '\">více</a>]';\n    }\n  });\n  r.open('GET', 'https://cs.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&origin=*&exintro=true&explaintext=true&titles=' + encodeURI(jmeno));\n  r.send();\n}\n\nfunction vlozObce(data) {\n  map.addLayer({\n    'id': 'obce',\n    'type': 'symbol',\n    'source': {\n      'type': 'geojson',\n      'data': data\n    },\n    'layout': {\n      'icon-image': 'ico',\n      'icon-size': ['interpolate', ['linear'], ['get', 'pv'], 80, 0.1, 2117350, 0.7],\n      'icon-allow-overlap': true,\n      'icon-ignore-placement': true,\n      'icon-optional': true,\n      'text-field': '{rod}',\n      'symbol-sort-key': ['-', 1, ['get', 'pv']],\n      'text-size': ['interpolate', ['linear'], ['get', 'pv'], 80, 10, 2117350, 30],\n      'text-font': ['Open Sans Regular'],\n      'text-offset': [0, 0.3],\n      'text-anchor': 'top'\n    },\n    'paint': {\n      'icon-color': '#3182bd',\n      'icon-opacity': 0.3,\n      'text-color': '#d52834',\n      'text-opacity': 1,\n      'text-halo-color': 'white',\n      'text-halo-width': 2,\n      'text-halo-blur': 1\n    }\n  });\n}\n\nmap.on('load', function () {\n  map.loadImage(host + '/wikimapa-rodaci/data/kol.png', function (error, image) {\n    if (error) throw error;\n    map.addImage('ico', image, {\n      'sdf': 'true'\n    });\n  });\n  var r = new XMLHttpRequest();\n  r.addEventListener('load', function (e) {\n    return vlozObce(JSON.parse(e.target.response));\n  });\n  r.open('GET', host + '/wikimapa-rodaci/data/data.json');\n  r.send();\n  map.on('mousemove', function (e) {\n    var d = map.queryRenderedFeatures(e.point, {\n      layers: ['obce']\n    });\n\n    if (d.length > 0) {\n      map.getCanvas().style.cursor = 'pointer';\n    } else {\n      map.getCanvas().style.cursor = 'grab';\n    }\n  });\n  map.on('click', function (e) {\n    var d = map.queryRenderedFeatures(e.point, {\n      layers: ['obce']\n    });\n\n    if (d.length > 0) {\n      document.getElementById('legend_top').innerHTML = '<b>' + d[0].properties['rod'] + '</b> (' + d[0].properties['Nazev'] + ')';\n      getCanc(d[0].properties['rod']);\n    } else {\n      document.getElementById('legend_top').innerHTML = '<b>Vyberte osobnost.</b>';\n      document.getElementById('canc').innerHTML = '';\n    }\n  });\n});\n$(\"#inp-geocode\").on(\"focus input\", function () {\n  return $(\"#inp-geocode\").css(\"border-color\", \"black\");\n}); // geocoder\n\nvar form = document.getElementById(\"frm-geocode\");\n\nform.onsubmit = function submitForm(event) {\n  event.preventDefault();\n  var text = document.getElementById(\"inp-geocode\").value;\n\n  if (text === \"\") {\n    map.flyTo({\n      center: [15.3350758, 49.7417517],\n      zoom: 7\n    });\n  } else {\n    $.get(\"https://api.mapy.cz/geocode?query=\".concat(text), function (data) {\n      if (typeof $(data).find(\"item\").attr(\"x\") === \"undefined\") {\n        $(\"#inp-geocode\").css(\"border-color\", \"red\");\n        return;\n      }\n\n      var x = parseFloat($(data).find(\"item\").attr(\"x\"));\n      var y = parseFloat($(data).find(\"item\").attr(\"y\"));\n\n      if (x < 12 || x > 19 || y < 48 || y > 52) {\n        // omezení geosearche na česko, plus mínus\n        $(\"#inp-geocode\").css(\"border-color\", \"red\");\n        return;\n      }\n\n      map.flyTo({\n        center: [x, y],\n        zoom: 14\n      });\n    }, \"xml\");\n  }\n};\n\n//# sourceURL=webpack:///./js/script.js?");
+
+/***/ })
+
+/******/ });

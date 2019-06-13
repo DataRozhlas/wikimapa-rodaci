@@ -47,9 +47,15 @@ function vlozObce(data) {
             'data': data,
         },
         'layout': {
-            'icon-image': 'circle-11',
-            'icon-size': 0.5,
-            //'icon-allow-overlap': true,
+            'icon-image': 'ico',
+            'icon-size': [
+              'interpolate',
+              ['linear'],
+              ['get', 'pv'],
+              80, 0.1,
+              2117350, 0.7
+            ],
+            'icon-allow-overlap': true,
             'icon-ignore-placement': true,
             'icon-optional': true,
             'text-field': '{rod}' ,
@@ -67,9 +73,9 @@ function vlozObce(data) {
         },
         'paint': {
           'icon-color': '#3182bd',
-          'icon-opacity': 0.5,
-          'text-color': '#3182bd',
-          'text-opacity': 0.9,
+          'icon-opacity': 0.3,
+          'text-color': '#d52834',
+          'text-opacity': 1,
           'text-halo-color': 'white',
           'text-halo-width': 2,
           'text-halo-blur': 1,
@@ -78,6 +84,12 @@ function vlozObce(data) {
 }
 
 map.on('load', function() {
+  map.loadImage(host + '/wikimapa-rodaci/data/kol.png', function(error, image) {
+    if (error) throw error;
+      map.addImage('ico', image, {
+        'sdf': 'true'
+      });
+  })
     const r = new XMLHttpRequest();
     r.addEventListener('load', e => vlozObce(JSON.parse(e.target.response)));
     r.open('GET', host + '/wikimapa-rodaci/data/data.json');
