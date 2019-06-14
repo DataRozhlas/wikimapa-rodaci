@@ -1,6 +1,5 @@
 ﻿/* todo:
 - jména měst?
-- pozicování legendy
 */
 
 let host = "https://data.irozhlas.cz";
@@ -71,7 +70,12 @@ function vlozObce(data) {
       "icon-allow-overlap": true,
       "icon-ignore-placement": true,
       "icon-optional": true,
-      "text-field": "{rodstr}",
+      //"text-field": "{rodstr}",
+      "text-field": ["format",
+        ["get", "rodstr"], {},
+        "\n", {},
+        ["get", "Nazev"], { "font-scale": 0.7, "text-font": ["literal", ["Open Sans Regular"]] },
+      ],
       "symbol-sort-key": ["-", 1, ["get", "pv"]],
       "text-size": [
         "interpolate",
@@ -80,7 +84,7 @@ function vlozObce(data) {
         80, 10,
         2117350, 30,
       ],
-      "text-font": ["Open Sans Regular"],
+      "text-font": ["Open Sans Bold"],
       "text-offset": [0, 0.3],
       "text-anchor": "top",
     },
