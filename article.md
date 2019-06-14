@@ -6,12 +6,12 @@ options: [noheader, nopic] #wide, noheader (, nopic)
 ---
 
 <wide>
-<!--<form action="?" id="frm-geocode">
+<form action="?" id="frm-geocode">
 	<div class="inputs">
 	<input type="text" id="inp-geocode" placeholder="Zadejte obec či adresu...">
 	<input type="submit" id="inp-btn" value="Najít">
 	</div>
-</form>-->
+</form>
 <div id="map"></div>
 <div id="legend">
 	<div id="legend_top"><b>Vyberte osobnost.</b></div>

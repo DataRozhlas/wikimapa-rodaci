@@ -33,17 +33,15 @@ function odzavorkuj(string) {
 }
 
 function getCanc(jmeno, obec) {
-  const r = new XMLHttpRequest();
-  r.addEventListener("load", (e) => {
-    const prs = JSON.parse(e.target.response);
-    if ("query" in prs) {
-      const text = Object.values(prs.query.pages)[0].extract;
-      document.getElementById("legend_top").innerHTML = `<b>${odzavorkuj(jmeno)}</b> (${obec})`;
-      document.getElementById("canc").innerHTML = `${odzavorkuj(text)} [<a target="_blank" rel="noopener noreferrer" href="https://cs.wikipedia.org/wiki/${jmeno}">více</a>]`;
-    }
-  });
-  r.open("GET", "https://cs.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&origin=*&exsentences=3&exintro=true&explaintext=true&titles=" + encodeURI(jmeno));
-  r.send();
+  fetch(`https://cs.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&origin=*&exsentences=3&exintro=true&explaintext=true&titles=${encodeURI(jmeno)}`)
+    .then(response => response.json())
+    .then((prs) => {
+      if ("query" in prs) {
+        const text = Object.values(prs.query.pages)[0].extract;
+        document.getElementById("legend_top").innerHTML = `<b>${odzavorkuj(jmeno)}</b> (${obec})`;
+        document.getElementById("canc").innerHTML = `${odzavorkuj(text)} [<a target="_blank" rel="noopener noreferrer" href="https://cs.wikipedia.org/wiki/${jmeno}">více</a>]`;
+      }
+    });
 }
 
 function vlozObce(data) {
@@ -70,7 +68,6 @@ function vlozObce(data) {
       "icon-allow-overlap": true,
       "icon-ignore-placement": true,
       "icon-optional": true,
-      //"text-field": "{rodstr}",
       "text-field": ["format",
         ["get", "rodstr"], {},
         "\n", {},
@@ -107,10 +104,10 @@ map.on("load", () => {
       sdf: "true",
     });
   });
-  const r = new XMLHttpRequest();
-  r.addEventListener("load", e => vlozObce(JSON.parse(e.target.response)));
-  r.open("GET", host + "/wikimapa-rodaci/data/data.json");
-  r.send();
+
+  fetch(`${host}/wikimapa-rodaci/data/data.json`)
+    .then(response => response.json())
+    .then(data => vlozObce(data));
 
   map.on("mousemove", (e) => {
     const d = map.queryRenderedFeatures(e.point, {
@@ -136,8 +133,11 @@ map.on("load", () => {
   });
 });
 
-/*
-$("#inp-geocode").on("focus input", () => $("#inp-geocode").css("border-color", "black"));
+["focus", "input"].forEach((e) => {
+  document.querySelector("#inp-geocode").addEventListener(e, () => {
+    document.querySelector("#inp-geocode").style["border-color"] = "black";
+  });
+});
 
 // geocoder
 const form = document.getElementById("frm-geocode");
@@ -150,22 +150,26 @@ form.onsubmit = function submitForm(event) {
       zoom: 7,
     });
   } else {
-    $.get(`https://api.mapy.cz/geocode?query=${text}`, (data) => {
-      if (typeof $(data).find("item").attr("x") === "undefined") {
-        $("#inp-geocode").css("border-color", "red");
-        return;
-      }
-      const x = parseFloat($(data).find("item").attr("x"));
-      const y = parseFloat($(data).find("item").attr("y"));
-      if (x < 12 || x > 19 || y < 48 || y > 52) { // omezení geosearche na česko, plus mínus
-        $("#inp-geocode").css("border-color", "red");
-        return;
-      }
-      map.flyTo({
-        center: [x, y],
-        zoom: 14,
-      });
-    }, "xml");
+    fetch(`https://api.mapy.cz/geocode?query=${text}`)
+      .then(response => response.text())
+      .then((data) => {
+        const dataContainer = document.createElement("div");
+        dataContainer.innerHTML = data;
+        if (!dataContainer.querySelector("item[x]")) {
+          document.querySelector("#inp-geocode").style["border-color"] = "red";
+          return;
+        }
+
+        const x = parseFloat(dataContainer.querySelector("item[x]").getAttribute("x"));
+        const y = parseFloat(dataContainer.querySelector("item[y]").getAttribute("y"));
+        if (x < 12 || x > 19 || y < 48 || y > 52) { // omezení geosearche na česko, plus mínus
+          document.querySelector("#inp-geocode").style["border-color"] = "red";
+          return;
+        }
+        map.flyTo({
+          center: [x, y],
+          zoom: 14,
+        });
+      }, "xml");
   }
 };
-*/
