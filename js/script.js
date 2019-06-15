@@ -1,8 +1,4 @@
-﻿/* todo:
-- jména měst?
-*/
-
-let host = "https://data.irozhlas.cz";
+﻿let host = "https://data.irozhlas.cz";
 if (window.location.hostname === "localhost") {
   host = "http://localhost:8000/samizdat";
 }
